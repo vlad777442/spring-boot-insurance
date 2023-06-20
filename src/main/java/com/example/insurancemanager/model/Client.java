@@ -4,6 +4,8 @@ package com.example.insurancemanager.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "clients")
@@ -19,5 +21,9 @@ public class Client {
     private String email;
 
     private String phoneNumber;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
+    private List<Policy> policies;
+
 
 }
