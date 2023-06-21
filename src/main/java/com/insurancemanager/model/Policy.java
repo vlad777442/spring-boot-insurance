@@ -1,4 +1,4 @@
-package com.example.insurancemanager.model;
+package com.insurancemanager.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class Policy {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "insuranceproduct_id")
-    private InsuranceProduct insuranceProduct;
+    private InsuranceProduct insuranceproduct;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id")

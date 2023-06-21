@@ -1,4 +1,4 @@
-package com.example.insurancemanager.model;
+package com.insurancemanager.model;
 
 public enum PolicyType {
     ONE,
