@@ -6,6 +6,7 @@ import com.insurancemanager.repository.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +43,11 @@ public class PolicyServiceImpl implements PolicyService {
     @Override
     public void deletePolicy(Long id) {
         policyRepository.delete(getPolicyById(id));
+    }
+
+    @Override
+    public boolean isActive(Policy policy) {
+        LocalDate currDateTime = LocalDate.now();
+        return currDateTime.isAfter(policy.getIssueDate()) && currDateTime.isBefore(policy.getExpireDate());
     }
 }

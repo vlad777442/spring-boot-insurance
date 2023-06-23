@@ -2,6 +2,9 @@ package com.insurancemanager.controller;
 
 import com.insurancemanager.model.Policy;
 import com.insurancemanager.model.PolicyType;
+import com.insurancemanager.service.AgentService;
+import com.insurancemanager.service.ClientService;
+import com.insurancemanager.service.InsuranceProductService;
 import com.insurancemanager.service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,48 +17,75 @@ public class PolicyController {
     @Autowired
     PolicyService policyService;
 
+    @Autowired
+    ClientService clientService;
+
+    @Autowired
+    AgentService agentService;
+
+    @Autowired
+    InsuranceProductService productService;
+
     @GetMapping("/findall")
     public String findAll(Model model) {
         model.addAttribute("policies", policyService.getAllPolicies());
-        return "policies";
+        return "all_policies";
     }
 
-    @GetMapping("/create")
-    public String createPolicyForm(Model model) {
-        Policy policy = new Policy();
-        model.addAttribute(policy);
+    @GetMapping("/add")
+    public String showPolicyForm(Model model) {
+        model.addAttribute("policy", new Policy());
         model.addAttribute("types", PolicyType.values());
+        model.addAttribute("clients", clientService.getAllClients());
+        model.addAttribute("agents", agentService.getAllAgents());
+        model.addAttribute("products", productService.getAllInsuranceProducts());
         return "create_policy";
     }
 
-    @PostMapping("/")
+    @PostMapping("/save")
     public String savePolicy(@ModelAttribute("policy") Policy policy) {
+        if (policyService.isActive(policy))
+            policy.setActive(true);
+        else policy.setActive(false);
         policyService.savePolicy(policy);
-        return "redirect:/policies";
+        return "redirect:/policies/findall";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editPolicyForm(@PathVariable Long id, Model model) {
+    @GetMapping("{id}/update")
+    public String showUpdatePolicyForm(@PathVariable Long id, Model model) {
         model.addAttribute("policy", policyService.getPolicyById(id));
+        model.addAttribute("types", PolicyType.values());
+        model.addAttribute("clients", clientService.getAllClients());
+        model.addAttribute("agents", agentService.getAllAgents());
+        model.addAttribute("products", productService.getAllInsuranceProducts());
         return "edit_policy";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("{id}/update")
     public String updatePolicy(@PathVariable Long id,
-                               @ModelAttribute("policy") Policy policy,
-                               Model model) {
-        Policy dbPolicy = policyService.getPolicyById(id);
-        dbPolicy.setId(policy.getId());
-        dbPolicy.setNumber(policy.getNumber());
-        ///...
-        policyService.updatePolicy(dbPolicy);
-        return "redirect:/policies";
+                               @ModelAttribute("policy") Policy updatedPolicy
+                               ) {
+        Policy policy = policyService.getPolicyById(id);
+
+        policy.setNumber(updatedPolicy.getNumber());
+        policy.setType(updatedPolicy.getType());
+        policy.setIssueDate(updatedPolicy.getIssueDate());
+        policy.setExpireDate(updatedPolicy.getExpireDate());
+        policy.setClient(updatedPolicy.getClient());
+        policy.setAgent(updatedPolicy.getAgent());
+        policy.setInsuranceproduct(updatedPolicy.getInsuranceproduct());
+
+        if (policyService.isActive(policy))
+            policy.setActive(true);
+        else policy.setActive(false);
+
+        policyService.updatePolicy(policy);
+        return "redirect:/policies/findall";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/delete")
     public String deletePolicy(@PathVariable Long id) {
         policyService.deletePolicy(id);
-        return "redirect:/policies";
+        return "redirect:/policies/findall";
     }
-
 }

@@ -6,7 +6,7 @@ import com.insurancemanager.model.InsuranceProduct;
 import java.util.List;
 
 public interface InsuranceProductService {
-    InsuranceProduct saveClient(InsuranceProduct insuranceProduct);
+    InsuranceProduct saveInsuranceProduct(InsuranceProduct insuranceProduct);
 
     List<InsuranceProduct> getAllInsuranceProducts();
 

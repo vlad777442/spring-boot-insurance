@@ -16,5 +16,7 @@ public interface PolicyService {
 
     void deletePolicy(Long id);
 
+    boolean isActive(Policy policy);
+
 
 }

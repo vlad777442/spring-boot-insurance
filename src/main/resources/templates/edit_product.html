@@ -18,34 +18,28 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-      <h1 class="text-center">Update Client</h1>
+      <h1 class="text-center">Update Product</h1>
       <div class="card-body">
-        <form th:action="@{/clients/{id}/update(id=${client.id})}" th:object="${client}" method="POST">
+        <form th:action="@{/products/{id}/update(id=${product.id})}" th:object="${product}" method="POST">
           <div class="form-group">
-            <label>Enter first name</label>
+            <label>Enter title</label>
             <input
                     type="text"
-                    name="firstName"
-                    th:field="*{firstName}"
-                    placeholder="Enter first name" class="form-control">
+                    name="title"
+                    th:field="*{title}"
+                    placeholder="Enter title" class="form-control">
             <label>Enter last name</label>
             <input
                     type="text"
-                    name="lastName"
-                    th:field="*{lastName}"
-                    placeholder="Enter last name" class="form-control">
-            <label>Enter email</label>
+                    name="description"
+                    th:field="*{description}"
+                    placeholder="Enter description" class="form-control">
+            <label>Enter price</label>
             <input
-                    type="email"
-                    name="email"
-                    th:field="*{email}"
-                    placeholder="Enter email" class="form-control">
-            <label>Enter phone</label>
-            <input
-                    type="text"
-                    name="phone"
-                    th:field="*{phoneNumber}"
-                    placeholder="Enter phone" class="form-control">
+                    type="number"
+                    name="price"
+                    th:field="*{price}"
+                    placeholder="Enter price" class="form-control">
 
             <div class="box-footer">
               <button type="submit" class="btn btn-info col-2">
@@ -53,7 +47,7 @@
               </button>
             </div>
         </form>
-        <a th:href = "@{/clients/findall}"> Back to Clients List</a>
+        <a th:href = "@{/products/findall}"> Back to Products List</a>
       </div>
     </div>
   </div>

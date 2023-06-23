@@ -1,13 +1,15 @@
 package com.insurancemanager.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "policies")
 public class Policy {
@@ -15,14 +17,14 @@ public class Policy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer number;
+    private Long number;
 
     @Enumerated(EnumType.STRING)
     private PolicyType type;
 
-    private LocalDateTime issueDate;
+    private LocalDate issueDate;
 
-    private LocalDateTime expireDate;
+    private LocalDate expireDate;
 
     private boolean isActive;
 

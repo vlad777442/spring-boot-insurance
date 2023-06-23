@@ -13,8 +13,9 @@ import java.util.Optional;
 public class InsuranceProductServiceImpl implements InsuranceProductService {
     @Autowired
     private InsuranceProductRepository insuranceProductRepository;
+
     @Override
-    public InsuranceProduct saveClient(InsuranceProduct insuranceProduct) {
+    public InsuranceProduct saveInsuranceProduct(InsuranceProduct insuranceProduct) {
         return insuranceProductRepository.save(insuranceProduct);
     }
 

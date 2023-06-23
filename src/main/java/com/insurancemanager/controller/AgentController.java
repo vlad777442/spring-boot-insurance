@@ -46,7 +46,7 @@ public class AgentController {
         agent.setEmail(updatedAgent.getEmail());
         agent.setPhoneNumber(updatedAgent.getPhoneNumber());
 
-        agentService.saveAgent(agent);
+        agentService.updateAgent(agent);
         return "redirect:/agents/findall";
     }
 

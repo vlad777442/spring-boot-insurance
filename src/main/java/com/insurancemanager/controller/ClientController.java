@@ -28,7 +28,7 @@ public class ClientController {
     @GetMapping("/findall")
     public String getAllClients(Model model) {
         model.addAttribute("clients", clientService.getAllClients());
-        return "clients";
+        return "all_clients";
     }
 
     @GetMapping ("{id}/update")
@@ -46,7 +46,7 @@ public class ClientController {
         client.setEmail(updatedClient.getEmail());
         client.setPhoneNumber(updatedClient.getPhoneNumber());
 
-        clientService.saveClient(client);
+        clientService.updateClient(client);
         return "redirect:/clients/findall";
     }
 
