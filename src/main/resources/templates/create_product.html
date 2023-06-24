@@ -24,19 +24,22 @@
           <div class="form-group">
 
             <label for="title">Title:</label>
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></div>
             <input type="text" th:field="*{title}" id="title"/><br>
 
             <label for="description">Description:</label>
+            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red"></div>
             <input type="text" th:field="*{description}" id="description"/><br>
 
             <label for="price">Price:</label>
+            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color: red"></div>
             <input type="number" th:field="*{price}" id="price"/><br>
 
           </div>
 
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">
-              Submit
+              Create
             </button>
           </div>
         </form>

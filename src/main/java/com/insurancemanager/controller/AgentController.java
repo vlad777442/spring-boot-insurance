@@ -2,9 +2,11 @@ package com.insurancemanager.controller;
 
 import com.insurancemanager.model.Agent;
 import com.insurancemanager.service.AgentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -20,7 +22,10 @@ public class AgentController {
     }
 
     @PostMapping("/save")
-    public String saveAgent(@ModelAttribute("agent") Agent agent) {
+    public String saveAgent(@ModelAttribute("agent") @Valid Agent agent, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create_agent";
+        }
         agentService.saveAgent(agent);
         return "redirect:/agents/findall";
     }
@@ -38,7 +43,12 @@ public class AgentController {
     }
 
     @PostMapping("{id}/update")
-    public String showUpdateAgentForm(@PathVariable Long id, @ModelAttribute("agent") Agent updatedAgent) {
+    public String showUpdateAgentForm(@PathVariable Long id,
+                                      @ModelAttribute("agent") @Valid Agent updatedAgent,
+                                      BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit_agent";
+        }
         Agent agent = agentService.getAgentById(id);
 
         agent.setFirstName(updatedAgent.getFirstName());

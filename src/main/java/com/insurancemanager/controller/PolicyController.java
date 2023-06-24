@@ -6,9 +6,11 @@ import com.insurancemanager.service.AgentService;
 import com.insurancemanager.service.ClientService;
 import com.insurancemanager.service.InsuranceProductService;
 import com.insurancemanager.service.PolicyService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -43,10 +45,14 @@ public class PolicyController {
     }
 
     @PostMapping("/save")
-    public String savePolicy(@ModelAttribute("policy") Policy policy) {
+    public String savePolicy(@ModelAttribute("policy") @Valid Policy policy, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create_policy";
+        }
+
         if (policyService.isActive(policy))
-            policy.setActive(true);
-        else policy.setActive(false);
+            policy.setIsActive(true);
+        else policy.setIsActive(false);
         policyService.savePolicy(policy);
         return "redirect:/policies/findall";
     }
@@ -63,8 +69,11 @@ public class PolicyController {
 
     @PostMapping("{id}/update")
     public String updatePolicy(@PathVariable Long id,
-                               @ModelAttribute("policy") Policy updatedPolicy
-                               ) {
+                               @ModelAttribute("policy") @Valid Policy updatedPolicy,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit_policy";
+        }
         Policy policy = policyService.getPolicyById(id);
 
         policy.setNumber(updatedPolicy.getNumber());
@@ -76,8 +85,8 @@ public class PolicyController {
         policy.setInsuranceproduct(updatedPolicy.getInsuranceproduct());
 
         if (policyService.isActive(policy))
-            policy.setActive(true);
-        else policy.setActive(false);
+            policy.setIsActive(true);
+        else policy.setIsActive(false);
 
         policyService.updatePolicy(policy);
         return "redirect:/policies/findall";

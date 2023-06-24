@@ -23,6 +23,7 @@
           <form th:action="@{/policies/save}" th:object="${policy}" method="POST">
             <div class="form-group">
               <label>Number</label>
+              <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}" style="color: red"></div>
               <input
                       type="number"
                       name="number"
@@ -30,30 +31,36 @@
                       placeholder="Enter policy number" class="form-control">
 
               <label>Type:</label>
+              <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red"></div>
               <select name="policyType" th:field="*{type}">
                 <option th:each="policyType : ${T(com.insurancemanager.model.PolicyType).values()}"
                         th:value="${policyType}" th:text="${policyType}"></option>
               </select><br>
 
               <label for="issueDate">Issue date:</label>
+              <div th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}" style="color: red"></div>
               <input type="date" th:field="*{issueDate}" id="issueDate"/><br>
 
               <label for="expireDate">Expire date:</label>
+              <div th:if="${#fields.hasErrors('expireDate')}" th:errors="*{expireDate}" style="color: red"></div>
               <input type="date" th:field="*{expireDate}" id="expireDate"/><br>
 
               <label for="client">Client:</label>
+              <div th:if="${#fields.hasErrors('client')}" th:errors="*{client}" style="color: red"></div>
               <select id="client" name="client" required>
                 <option value="">Select Client</option>
                 <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.firstName + ' ' + client.lastName + ' ' + client.phoneNumber}"></option>
               </select><br>
 
               <label for="agent">Agent:</label>
+              <div th:if="${#fields.hasErrors('agent')}" th:errors="*{agent}" style="color: red"></div>
               <select id="agent" name="agent" required>
                 <option value="">Select Agent</option>
                 <option th:each="agent : ${agents}" th:value="${agent.id}" th:text="${agent.firstName + ' ' + agent.lastName + ' ' + agent.phoneNumber}"></option>
               </select><br>
 
               <label for="product">Insurance Product:</label>
+              <div th:if="${#fields.hasErrors('insuranceProduct')}" th:errors="*{insuranceproduct}" style="color: red"></div>
               <select id="product" name="product" required>
                 <option value="">Select Insurance Product</option>
                 <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.title}"></option>

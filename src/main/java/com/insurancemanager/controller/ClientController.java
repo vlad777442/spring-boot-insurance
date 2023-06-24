@@ -2,9 +2,11 @@ package com.insurancemanager.controller;
 
 import com.insurancemanager.model.Client;
 import com.insurancemanager.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -20,7 +22,10 @@ public class ClientController {
     }
 
     @PostMapping("/save")
-    public String saveClient(@ModelAttribute("client") Client client) {
+    public String saveClient(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create_client";
+        }
         clientService.saveClient(client);
         return "redirect:/clients/findall";
     }
@@ -38,7 +43,12 @@ public class ClientController {
     }
 
     @PostMapping("{id}/update")
-    public String updateClient(@PathVariable Long id, @ModelAttribute("client") Client updatedClient) {
+    public String updateClient(@PathVariable Long id,
+                               @ModelAttribute("client") @Valid Client updatedClient,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit_client";
+        }
         Client client = clientService.getClientById(id);
 
         client.setFirstName(updatedClient.getFirstName());

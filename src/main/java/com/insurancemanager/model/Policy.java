@@ -1,6 +1,7 @@
 package com.insurancemanager.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,16 +18,20 @@ public class Policy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Number is required")
     private Long number;
 
+    @NotBlank(message = "Type is required")
     @Enumerated(EnumType.STRING)
     private PolicyType type;
 
+    @NotBlank(message = "Issue date is required")
     private LocalDate issueDate;
 
+    @NotBlank(message = "Expire date is required")
     private LocalDate expireDate;
 
-    private boolean isActive;
+    private Boolean isActive;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")

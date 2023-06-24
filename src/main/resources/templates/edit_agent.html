@@ -23,24 +23,31 @@
         <form th:action="@{/agents/{id}/update(id=${agent.id})}" th:object="${agent}" method="POST">
           <div class="form-group">
             <label>Enter first name</label>
+            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color: red"></div>
             <input
                     type="text"
                     name="firstName"
                     th:field="*{firstName}"
                     placeholder="Enter first name" class="form-control">
+
             <label>Enter last name</label>
+            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: red"></div>
             <input
                     type="text"
                     name="lastName"
                     th:field="*{lastName}"
                     placeholder="Enter last name" class="form-control">
+
             <label>Enter email</label>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red"></div>
             <input
                     type="email"
                     name="email"
                     th:field="*{email}"
                     placeholder="Enter email" class="form-control">
+
             <label>Enter phone</label>
+            <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color: red"></div>
             <input
                     type="text"
                     name="phone"

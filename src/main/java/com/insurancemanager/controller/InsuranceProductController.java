@@ -2,9 +2,11 @@ package com.insurancemanager.controller;
 
 import com.insurancemanager.model.InsuranceProduct;
 import com.insurancemanager.service.InsuranceProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -20,7 +22,10 @@ public class InsuranceProductController {
     }
 
     @PostMapping("/save")
-    public String saveProduct(@ModelAttribute("product") InsuranceProduct product) {
+    public String saveProduct(@ModelAttribute("product") @Valid InsuranceProduct product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create_product";
+        }
         productService.saveInsuranceProduct(product);
         return "redirect:/products/findall";
     }
@@ -38,7 +43,12 @@ public class InsuranceProductController {
     }
 
     @PostMapping("{id}/update")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute("product") InsuranceProduct updatedProduct) {
+    public String updateProduct(@PathVariable Long id,
+                                @ModelAttribute("product") @Valid InsuranceProduct updatedProduct,
+                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit_product";
+        }
         InsuranceProduct product = productService.getInsuranceProductById(id);
 
         product.setTitle(updatedProduct.getTitle());
