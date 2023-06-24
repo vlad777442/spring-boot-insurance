@@ -49,6 +49,10 @@ public class PolicyController {
         if (bindingResult.hasErrors()) {
             return "create_policy";
         }
+        if (policy.getIssueDate().isAfter(policy.getExpireDate())) {
+            bindingResult.rejectValue("issueDate", "issueDate", "Issue date must be earlier than expire date");
+            return "create_policy";
+        }
 
         if (policyService.isActive(policy))
             policy.setIsActive(true);
@@ -74,6 +78,11 @@ public class PolicyController {
         if (bindingResult.hasErrors()) {
             return "edit_policy";
         }
+        if (updatedPolicy.getIssueDate().isAfter(updatedPolicy.getExpireDate())) {
+            bindingResult.rejectValue("issueDate", "issueDate", "Issue date must be earlier than expire date");
+            return "create_policy";
+        }
+
         Policy policy = policyService.getPolicyById(id);
 
         policy.setNumber(updatedPolicy.getNumber());
