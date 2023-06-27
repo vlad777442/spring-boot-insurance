@@ -4,15 +4,14 @@
 ```bash
 $ git clone https://github.com/vlad777442/spring-boot-mvc-insurance-app
 ```
-Configure application.properties
+* Configure application.properties;
+* Start your SQL server;
+* Run Spring Boot Application.
 
-Soon...
+
 
 [http://localhost:8080/](http://localhost:8080/)
 
-TODO:
-* Validation;
-* Exceptions.
 
 
 ![Starting](./images/Screenshot_4.jpg)
