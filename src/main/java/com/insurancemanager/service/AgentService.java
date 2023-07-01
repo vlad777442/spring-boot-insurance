@@ -15,4 +15,7 @@ public interface AgentService {
     void updateAgent(Agent client);
 
     void deleteAgent(Long id);
+
+    boolean doesAgentExist(String email, String phone);
+
 }

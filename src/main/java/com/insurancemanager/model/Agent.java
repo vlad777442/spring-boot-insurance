@@ -24,9 +24,11 @@ public class Agent {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
+    @Column(unique = true)
     @Email(message = "Invalid email")
     private String email;
 
+    @Column(unique = true)
     @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
     private String phoneNumber;
 

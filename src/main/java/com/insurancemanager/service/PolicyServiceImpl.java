@@ -50,4 +50,9 @@ public class PolicyServiceImpl implements PolicyService {
         LocalDate currDateTime = LocalDate.now();
         return currDateTime.isAfter(policy.getIssueDate()) && currDateTime.isBefore(policy.getExpireDate());
     }
+
+    @Override
+    public List<Policy> getAllPoliciesByAgentId(Long id) {
+        return policyRepository.getPoliciesByAgentId(id);
+    }
 }

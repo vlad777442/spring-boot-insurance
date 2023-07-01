@@ -1,6 +1,6 @@
 package com.insurancemanager.service;
 
-import com.insurancemanager.exception.AgentNotFoundException;
+import com.insurancemanager.exception.*;
 import com.insurancemanager.model.Agent;
 import com.insurancemanager.repository.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,9 @@ public class AgentServiceImpl implements AgentService {
     private AgentRepository agentRepository;
     @Override
     public Agent saveAgent(Agent agent) {
+        if (doesAgentExist(agent.getEmail(), agent.getPhoneNumber())) {
+            throw new ClientAlreadyExistsException("Client with the same email or phone number already exists");
+        }
         return agentRepository.save(agent);
     }
 
@@ -41,5 +44,10 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public void deleteAgent(Long id) {
         agentRepository.delete(getAgentById(id));
+    }
+
+    @Override
+    public boolean doesAgentExist(String email, String phone) {
+        return agentRepository.existsAgentByEmailOrPhoneNumber(email, phone);
     }
 }

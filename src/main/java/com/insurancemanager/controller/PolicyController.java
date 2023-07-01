@@ -57,6 +57,7 @@ public class PolicyController {
         if (policyService.isActive(policy))
             policy.setIsActive(true);
         else policy.setIsActive(false);
+
         policyService.savePolicy(policy);
         return "redirect:/policies/findall";
     }

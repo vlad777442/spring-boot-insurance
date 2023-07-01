@@ -2,6 +2,7 @@ package com.insurancemanager.controller;
 
 import com.insurancemanager.model.Agent;
 import com.insurancemanager.service.AgentService;
+import com.insurancemanager.service.PolicyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class AgentController {
     @Autowired
     private AgentService agentService;
+
+    @Autowired
+    private PolicyService policyService;
 
     @GetMapping("/add")
     public String showAgentForm(Model model) {
@@ -34,6 +38,13 @@ public class AgentController {
     public String getAllAgents(Model model) {
         model.addAttribute("agents", agentService.getAllAgents());
         return "all_agents";
+    }
+
+    @GetMapping("/{id}")
+    public String showAgentPage(@PathVariable Long id, Model model) {
+        model.addAttribute("agent", agentService.getAgentById(id));
+        model.addAttribute("policies", policyService.getAllPoliciesByAgentId(id));
+        return "agent";
     }
 
     @GetMapping("{id}/update")

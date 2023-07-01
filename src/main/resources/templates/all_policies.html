@@ -42,6 +42,7 @@
                     <td th:text="${policy.issueDate}"></td>
                     <td th:text="${policy.expireDate}"></td>
                     <td th:text="${policy.isActive}"></td>
+
                     <td>
                         <a th:href="@{/policies/{id}/update(id=${policy.id})}"
                         class="btn btn-primary">Update</a>

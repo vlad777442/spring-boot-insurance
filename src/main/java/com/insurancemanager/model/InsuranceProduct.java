@@ -18,6 +18,7 @@ public class InsuranceProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     @NotBlank(message = "Title is required")
     private String title;
 
