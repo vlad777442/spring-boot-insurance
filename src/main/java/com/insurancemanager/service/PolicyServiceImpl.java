@@ -55,4 +55,9 @@ public class PolicyServiceImpl implements PolicyService {
     public List<Policy> getAllPoliciesByAgentId(Long id) {
         return policyRepository.getPoliciesByAgentId(id);
     }
+
+    @Override
+    public List<Policy> getAllPoliciesByClientId(Long id) {
+        return policyRepository.getPoliciesByClientId(id);
+    }
 }

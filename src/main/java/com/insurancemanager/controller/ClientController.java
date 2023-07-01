@@ -2,6 +2,7 @@ package com.insurancemanager.controller;
 
 import com.insurancemanager.model.Client;
 import com.insurancemanager.service.ClientService;
+import com.insurancemanager.service.PolicyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class ClientController {
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private PolicyService policyService;
 
     @GetMapping("/add")
     public String showClientForm(Model model) {
@@ -36,13 +40,20 @@ public class ClientController {
         return "all_clients";
     }
 
+    @GetMapping("/{id}")
+    public String showClientPage(@PathVariable Long id, Model model) {
+        model.addAttribute("client", clientService.getClientById(id));
+        model.addAttribute("policies", policyService.getAllPoliciesByClientId(id));
+        return "client";
+    }
+
     @GetMapping ("{id}/update")
     public String showUpdateClientForm(@PathVariable Long id, Model model) {
         model.addAttribute("client", clientService.getClientById(id));
         return "edit_client";
     }
 
-    @PostMapping("{id}/update")
+    @PostMapping("/{id}/update")
     public String updateClient(@PathVariable Long id,
                                @ModelAttribute("client") @Valid Client updatedClient,
                                BindingResult bindingResult) {

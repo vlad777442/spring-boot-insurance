@@ -19,4 +19,6 @@ public interface PolicyService {
     boolean isActive(Policy policy);
 
     List<Policy> getAllPoliciesByAgentId(Long id);
+
+    List<Policy> getAllPoliciesByClientId(Long id);
 }

@@ -29,6 +29,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Actions</th>
+                <th>Info</th>
             </tr>
 
             <tr th:each="client : ${clients}">
@@ -43,6 +44,7 @@
                     <a th:href="@{/clients/{id}/delete(id=${client.id})}"
                        class="btn btn-danger">Delete</a>
                 </td>
+                <td><a th:href="@{/clients/{id}(id=${client.id})}">More</a></td>
             </tr>
         </table>
 
