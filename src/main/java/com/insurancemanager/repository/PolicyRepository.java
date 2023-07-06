@@ -11,4 +11,6 @@ public interface PolicyRepository extends JpaRepository<Policy, Long> {
     List<Policy> getPoliciesByAgentId(Long id);
 
     List<Policy> getPoliciesByClientId(Long id);
+
+    List<Policy> getPoliciesByInsuranceproductId(Long id);
 }

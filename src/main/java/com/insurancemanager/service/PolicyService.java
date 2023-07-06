@@ -21,4 +21,6 @@ public interface PolicyService {
     List<Policy> getAllPoliciesByAgentId(Long id);
 
     List<Policy> getAllPoliciesByClientId(Long id);
+
+    List<Policy> getAllPoliciesByProductId(Long id);
 }

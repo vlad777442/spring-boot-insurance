@@ -2,6 +2,7 @@ package com.insurancemanager.controller;
 
 import com.insurancemanager.model.InsuranceProduct;
 import com.insurancemanager.service.InsuranceProductService;
+import com.insurancemanager.service.PolicyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class InsuranceProductController {
     @Autowired
     private InsuranceProductService productService;
+
+    @Autowired
+    private PolicyService policyService;
 
     @GetMapping("/add")
     public String showProductForm(Model model) {
@@ -34,6 +38,13 @@ public class InsuranceProductController {
     public String getAllProducts(Model model) {
         model.addAttribute("products", productService.getAllInsuranceProducts());
         return "all_products";
+    }
+
+    @GetMapping("/{id}")
+    public String showProductPage(@PathVariable Long id, Model model) {
+        model.addAttribute("product", productService.getInsuranceProductById(id));
+        model.addAttribute("policies", policyService.getAllPoliciesByProductId(id));
+        return "product";
     }
 
     @GetMapping("{id}/update")
